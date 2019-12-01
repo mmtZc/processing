@@ -1,9 +1,9 @@
-let numbers = [];
+let numbers = []; //creating array for list of numbers
 
 function setup() {
   createCanvas(400, 400);
-  textFont('Poppins');
-  numbers = loadStrings('numbers.txt');
+  textFont('Poppins'); //loading Google font stored in the index.html file
+  numbers = loadStrings('numbers.txt'); //loading txt file with all the numbers and storing it in the array
 }
 
 function draw() {
