@@ -40,6 +40,7 @@ function draw() {
   strokeWeight(0);
   textSize(12);
   pop();
+  
   fill(50);
   strokeWeight(0);
   textSize(40);
