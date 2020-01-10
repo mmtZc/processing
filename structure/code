@@ -1,0 +1,74 @@
+// 2020 Mattia Zucchelli 
+// the idea of this sketch is to create a sinusoidal movement using vertices
+// at the center of the canvas, then connecting different lines from the 
+// top and bottom of the canvas to the vertices on the wave
+
+int mL = 88;
+// storing the values of the sinusoidal wave and the lines in arrays
+float[]x = new float[mL];
+float[]y = new float[mL];
+float[]a = new float[mL/2];
+float[]b = new float[mL/2];
+float r = 180;
+// initial angle for the wave and its speed
+float angle = 0;
+float speed = 0.009;
+int spacing;
+
+void setup() {
+  size(800, 500);
+  //pixelDensity(2);
+}
+
+void draw() {
+  background(#FFECE7);
+  translate(width/2, height/2);
+  randomSeed(6);
+  spacing = (width/mL);
+  beginShape();
+  fill(#69A1B3, 200);
+  stroke(#69A1B3);
+  for (int i = 1; i < a.length; i++) {
+    // b[i] is the y axis, creating the sinusoidal movement
+    a[i] = -width/2 + 200 +  spacing*i;
+    b[i] = r * cos((angle+i)/10);
+
+    angle += speed;
+    // displaying circles to better visualize the vertices 
+    // ellipse(a[i], b[i], 5, 5);
+    strokeWeight(10);
+    vertex(a[i], b[i]);
+  }
+  vertex(a[1], b[1]);
+  vertex(a[mL/2-1], b[mL/2-1]);
+  endShape();
+
+  // these next to shapes sections are creating the lines from the bottom and top of screen
+
+  beginShape();
+  strokeWeight(1.32);
+  stroke(0, 150);
+  noFill();
+  for (int i = 1; i < x.length; i++) {
+    int j = int(map(i, 1, x.length, 1, a.length));
+    y[i] = r * cos((angle+i)/10);
+    x[i] = -width/2 + 10 +  spacing*i;
+    circle(x[i], -height/2 + 15, 2);
+    vertex(x[i], -height/2 + 15);
+    vertex(a[j], b[j]);
+  }
+  endShape();
+
+
+  beginShape();
+  noFill();
+  for (int i = 1; i < x.length; i++) {
+    int j = int(map(i, 1, x.length, 1, a.length));
+    circle(x[i]*1.1, height/2-15, 2);
+    vertex(x[i]*1.1, height/2-15);
+    vertex(a[j], b[j]);
+  }
+  endShape();
+
+  //saveFrame("filigree_2020_####.png");
+}
