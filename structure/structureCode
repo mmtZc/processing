@@ -1,4 +1,4 @@
-// 2020 Mattia Zucchelli 
+// 2020 Mattia Zucchelli for Processing
 // the idea of this sketch is to create a sinusoidal movement using vertices
 // at the center of the canvas, then connecting different lines from the 
 // top and bottom of the canvas to the vertices on the wave
