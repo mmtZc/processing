@@ -1,3 +1,5 @@
+// © Mattia Zucchelli - 2020
+
 // I am drawing curves between diagonal points in a rectangle, choosing interpolated values along these lines and then displacing them with Perlin noise. 
 // Play with with the Perlin noise values (mm, nn, gg) for variations.
 
