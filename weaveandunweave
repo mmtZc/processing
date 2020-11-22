@@ -1,0 +1,86 @@
+// I am drawing curves between diagonal points in a rectangle, choosing interpolated values along these lines and then displacing them with Perlin noise. 
+// Play with with the Perlin noise values (mm, nn, gg) for variations.
+
+float spacing;
+int lenga = 300;
+
+float startX;
+float endX;
+float startY;
+float endY;
+
+float xTop;
+float yTop;
+
+float xBot;
+float yBot;
+
+float xLerp, yLerp, xLerp02, yLerp02, xLerp03, yLerp03;
+
+void setup() {
+  size(1000, 600);
+
+  pixelDensity(2);
+  smooth();
+
+  startX = width*0.25;
+  endX = width*0.75;
+  startY = height*0.25;
+  endY = height*0.75;
+  spacing = (endX - startX) / lenga;
+
+  for (int i = 0; i < lenga; i++) {
+    xTop = startX + (i*spacing);
+    yTop = height*0.25;
+  }
+}
+
+void draw() {
+  background(230);
+  randomSeed(13);
+
+  float xoff = 0;
+  for (int i = 0; i < lenga; i++) {
+    float j = map(i, 0, lenga, 0, TWO_PI);
+    float weight = map(i,0,lenga,0.1,0.9);
+
+    xTop = startX + (i*spacing);
+    xBot = (startX + (i*spacing)) - (endY - startY);
+
+    if (xBot < startX) {
+      xBot = startX;
+      yBot = startY + (i*spacing);
+    } else {
+      xBot = (startX + (i*spacing)) - (endY - startY);
+      yBot = endY;
+    }
+
+    float lerpAmt = map(i, 0, lenga*2, 0.6, 0.24); //
+    float lerpAmt02 = map(i, 0, lenga*2, 0.26, 0.164); // 
+    float lerpAmt03 = map(i, 0, lenga*2, 0.66, 0.84); // these three lerpAmt values are mapped so that each line has a different lerp amount depending on i value
+    xLerp = lerp(xTop, xBot, lerpAmt);
+    yLerp = lerp(yTop, yBot, lerpAmt);
+    xLerp02 = lerp(xTop, xBot, lerpAmt02);
+    yLerp02 = lerp(yTop, yBot, lerpAmt02);
+    xLerp03 = lerp(xTop, xBot, lerpAmt03);
+    yLerp03 = lerp(yTop, yBot, lerpAmt03); // specifing lerp values for x and y
+    float mm = map(noise(xoff), 0, 1, -30, 120); 
+    float nn = map(noise(xoff), 0, 1, 120, -30);
+    float gg = map(noise(xoff), 0, 1, 110, -20); // mapping different Perlin noise values for lerp offsets
+
+    beginShape();  
+    strokeWeight(weight);
+    fill(230, 3);
+    curveVertex(xTop, yTop-20*sin(j));
+    curveVertex(xTop, yTop-20*sin(j));
+    curveVertex(xLerp+mm, yLerp+mm);
+    curveVertex(xLerp02-nn, yLerp02+nn);
+    curveVertex(xLerp03+gg, yLerp03+nn);
+    curveVertex(xBot, yBot);
+    curveVertex(xBot, yBot);
+    endShape();
+    
+    xoff+=0.03;
+  }
+}
+
