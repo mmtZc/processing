@@ -25,7 +25,7 @@ void draw() {
   float absTempoX = 5.0-abs(5.0-tempoX);
   float q = 4.0+tempo;
 
-  camera((width/2.0), (height/4.0)-(temporale), ((height/q) / tan(PI*30.0 / 180.0)), (80*sin(rotea))+width/2.0, -200+(height/2.0), 0, 0, 1, 0); 
+  camera((width/2.0), (height/4.0)-(temporale), ((height/q) / tan(PI*30.0 / 180.0)), (80*sin(rotea))+width/2.0, -1000+(height/2.0), 0, 0, 1, 0); 
   randomSeed(4);
   float xoff = 0;
   rotea+=0.01;
@@ -38,9 +38,9 @@ void draw() {
     for (float b = 1; b < mLy; b+=0.2) {
       float yOut = (height*0.25) + b * (height*0.75 - height*0.25)/mLy;
       float nn = map(noise(xoff, xoff, xoff), 0, 1, -14, 14);
-      float mm = map(nn, -14, 14, 0.2, 2.4);
+      float mm = map(nn, -14, 14, 0.4, 4.8);
       stroke(235);
-      strokeWeight(2*mm*tempoS);
+      strokeWeight(mm*tempoS);
       point(xOut, yOut, nn*sOffset*(exp(absTempoX)-1.0));
       xoff += 0.1;
     }
